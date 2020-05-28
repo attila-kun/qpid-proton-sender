@@ -48,8 +48,8 @@ private:
 
 int main()
 {
-    auto sender_ptr = std::make_shared<amq_proton_sender>();
-    auto container_ptr = std::make_shared<proton::container>(*sender_ptr);
-    auto container_thread = std::make_unique<std::thread>([container_ptr]() { container_ptr->run(); });
+    amq_proton_sender sender_ptr;
+    proton::container container_ptr(sender_ptr);
+    auto container_thread = std::make_unique<std::thread>([&container_ptr]() { container_ptr.run(); });
     std::this_thread::sleep_for(std::chrono::hours(1000));
 }
